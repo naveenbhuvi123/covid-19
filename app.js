@@ -167,18 +167,13 @@ app.get("/states/:stateId/stats/", async (request, response) => {
 
 app.get("/districts/:districtId/details/", async (request, response) => {
   const { districtId } = request.params;
-  const { stateId } = request.body;
-  const getDistrictIdQuery = `
-select state_id from district
- where district_id = ${districtId};
-`; //With this we will get the state_id using district table
-  const getDistrictIdQueryResponse = await db.get(getDistrictIdQuery);
+  const stateDetails = `
+   SELECT state_name as stateName
+   FROM state JOIN district
+      ON state.state_id = district.state_id
+    WHERE district.district_id = ${districtId};`;
+  const stateName = await db.get(stateDetails);
+  response.send(stateName);
+});
 
-  const getStateNameQuery = `
-select state_name as stateName from state
-where state_id = ${getDistrictIdQueryResponse.stateId};
-`; //With this we will get state_name as stateName using the state_id
-  const getStateNameQueryResponse = await db.get(getStateNameQuery);
-  response.send(getStateNameQueryResponse);
-}); //sending the required response
 module.exports = app;
