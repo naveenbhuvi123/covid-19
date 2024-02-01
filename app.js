@@ -35,6 +35,7 @@ const convertDbObjectToResponseObject = (dbObject) => {
   };
 };
 
+//GET STATES LIST API 1 
 app.get("/states/", async (request, response) => {
   const getStatesQuery = `
       SELECT 
@@ -49,6 +50,7 @@ app.get("/states/", async (request, response) => {
   );
 });
 
+//GET STATE BASED ON STATE ID API-2
 app.get("/states/:stateId/", async (request, response) => {
   const { stateId } = request.params;
   const getStateQuery = `
@@ -62,6 +64,7 @@ app.get("/states/:stateId/", async (request, response) => {
   response.send(convertDbObjectToResponseObject(stateDbResponse));
 });
 
+//CREATE DISTRICT  API 3
 app.post("/districts/", async (request, response) => {
   const {
     districtId,
@@ -98,7 +101,8 @@ const convertDbObjectToResponse = (dbObject) => {
     deaths: dbObject.deaths,
   };
 };
-//GET DISTRICT API
+
+//GET DISTRICT API 4
 app.get("/districts/:districtId/", async (request, response) => {
   const { districtId } = request.params;
   const getDistrictQuery = `
@@ -112,6 +116,7 @@ app.get("/districts/:districtId/", async (request, response) => {
   response.send(convertDbObjectToResponse(getDistrict));
 });
 
+//DELETE DISTRICT API 5
 app.delete("/districts/:districtId/", async (request, response) => {
   const { districtId } = request.params;
   const getDistrictQuery = `
@@ -123,7 +128,8 @@ app.delete("/districts/:districtId/", async (request, response) => {
   response.send("District Removed");
 });
 
-//UPDATE DETAILS API
+
+//UPDATE DETAILS OF DISTRICT  API 6
 app.put("/districts/:districtId/", async (request, response) => {
   const { districtName, stateId, cases, cured, active, deaths } = request.body;
   const { districtId } = request.params;
@@ -143,6 +149,7 @@ app.put("/districts/:districtId/", async (request, response) => {
   response.send("District Details Updated");
 });
 
+//GET DISTRICT INFO API 7
 app.get("/states/:stateId/stats/", async (request, response) => {
   const { stateId } = request.params;
   const getStateStatsQuery = `
@@ -165,6 +172,7 @@ app.get("/states/:stateId/stats/", async (request, response) => {
   });
 });
 
+//GET STATENAME API 8
 app.get("/districts/:districtId/details/", async (request, response) => {
   const { districtId } = request.params;
   const stateDetails = `
